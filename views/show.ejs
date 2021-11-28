@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/show.css">
+  <title>Detalhes do Curso</title>
+</head>
+<body>
+  <%- include("./partials/header") %>
+  <div class="container">
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="card" style="width: 20rem;">
+          <img src="<%= course.image %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= course.title %></h5>
+            <p class="card-text"><%= course.description %></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: <%= course.id %></li>
+            <li class="list-group-item">Professor: <%= course.teacher %></li>
+            <li class="list-group-item">Criado em: <%= course.createdAt.toLocaleDateString('pt-br') %> - <%= course.createdAt.toLocaleTimeString('pt-br') %></li>
+            <li class="list-group-item">Atualizado em: <%= course.updatedAt.toLocaleDateString('pt-br') %> - <%= course.updatedAt.toLocaleTimeString('pt-br') %></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h1>Lista de Aulas:</h1>
+        <% embedLinks.forEach(element => { %>
+          <% if (element.includes("https://www.youtube.com/embed/")) { %>
+            <iframe width="660" height="215" src="<%= element %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <% } else { %>
+            <a href="<%= element %>">Aula</a>
+            <% }; %>
+        <% }); %>
+      </div>
+    </div>
+    <div class="home">
+      <a href="/">Voltar a página inicial</a>
+    </div>
+  </div> 
+</body>
+</html>

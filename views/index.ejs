@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <title>Desafio HSM Coders</title>
+</head>
+<body>
+  <%- include("./partials/header") %>
+  <div class="container">
+    <span class="register">Faça sua busca ou <a class="new" href="/course/new">cadastre um novo curso</a></span>
+    <form action="/courses/search" method="GET">
+      <div class="form-group d-flex flex-row search">
+        <input type="text" class="form-control" name="search">
+        <button type="button" class="btn btn-success search-btn">Pesquisar</button>
+      </div>
+    </form>
+    <% if (allCourses.length == 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <p>Não foram encontrados resultados para sua pesquisa</p>
+      </div>
+    <% } %>
+    <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Nome do professor</th>
+        <th>Data de inclusão</th>
+        <th>Data de alteração</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (allCourses) { %>
+        <% allCourses.forEach(element => { %>
+          <tr>
+            <td>
+              <a class="courseID" href="/courses/show/<%- element.id %>"><%- element.id %></a>
+            </td>
+            <td>
+              <a class="courseID" href="/courses/show/<%- element.id %>"><%- element.title %></a>
+            </td>
+            <td>
+              <a class="courseID"href="/courses/show/<%- element.id %>"><%- element.teacher %></a>
+            </td>
+            <td>
+              <a class="courseID"href="/courses/show/<%- element.id %>"><%- element.createdAt.toLocaleDateString('pt-br') %> - <%- element.createdAt.toLocaleTimeString('pt-br') %></a>
+            </td>
+            <td>
+              <a class="courseID"href="/courses/show/<%- element.id %>"><%- element.updatedAt.toLocaleDateString('pt-br') %> - <%- element.updatedAt.toLocaleTimeString('pt-br') %></a>
+            </td>
+            <td>
+              <div class="icons">
+                <a  class="edit-btn" href="/courses/update/<%- element.id %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <form action="/courses/delete/<%- element.id %>" method="POST" class="row g-3 needs-validation" novalidate>
+                  <button class="delete-btn" type="submit" onclick=" return confirm('Tem certeza que deseja excluir?')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+       <% }); %>
+      <% }; %>
+    </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <% if(offset > 0) { %>
+          <li class="page-item"><a class="page-link" href="/?limit=<%= limit %>&offset=<%= offset - limit %>">Anterior</a></li>
+        <% }; %>
+        <% if(offset + limit < count ) { %>
+          <li class="page-item"><a class="page-link" href="/?limit=<%= limit %>&offset=<%= offset + limit %>">Próxima</a></li>
+        <% }; %>
+      </ul>
+    </nav>
+  </div>
+</body>
+</html>
