@@ -7,7 +7,6 @@ const logger = require('morgan');
 const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -23,9 +22,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
+app.use((req, res, next) => {
+  const auth = {login: process.env.APP_LOGIN || 'admin', password: process.env.APP_PASSWORD || 'password'}
+  const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
+  const [login, password] = Buffer.from(b64auth, 'base64').toString().split(':')
+
+  if (login && password && login === auth.login && password === auth.password) {
+    return next()
+  }
+
+  res.set('WWW-Authenticate', 'Basic realm="401"')
+  res.status(401).send('Usuário ou senha inválidos.')
+})
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
