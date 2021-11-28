@@ -1,4 +1,4 @@
-# CRUD
+# CRUD HSM
 
 Projeto Final HSM Coders da Gama Academy
 Uma plataforma que permite fazer um CRUD de forma simples para o usuário. 
@@ -6,7 +6,7 @@ Foi desenvolvido em ambiente NodeJS, utilizando MySQL e Express.
 
 ## Executar aplicação pelo heroku
 
-Para usar de maneira rápida, acesse 
+Para usar de maneira rápida, acesse [CRUD HSM](https://crud-hsm.herokuapp.com/)
 
 ## Instalar dependencias
 
