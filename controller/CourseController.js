@@ -36,8 +36,10 @@ const controller = {
     },
 
     searchCourse: async function(req, res, next) {
-        const allCourses = await courseModel.findCourse(req.query.search);
-        res.render('', {allCourses});
+        const limit = parseInt(req.query.limit) || 4
+        const offset = parseInt(req.query.offset) || 0
+        const { count, rows } = await courseModel.findCourse(req.query.search, limit, offset);
+        res.render('index', { limit, offset, count, allCourses: rows });
     },
     
     show: async function(req, res, next) {

@@ -21,8 +21,8 @@ exports.createCourse = async ({
   return newCourse;
 };
 
-exports.findCourse = async(search) => {
-  return Course.findAll({
+exports.findCourse = async(search, limit, offset) => {
+  return Course.findAndCountAll({
     where: {
       deleted: false,
       [Op.or]: [
@@ -38,6 +38,8 @@ exports.findCourse = async(search) => {
         },
       ],
     },
+    limit: limit || 4,
+    offset: offset || 0
   });
 };
 
